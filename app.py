@@ -9,8 +9,10 @@ import api_connector
 import json
 import pandas as pd
 
+
 app = Flask(__name__)
 CORS(app)
+
 
 
 class _customer_ :
@@ -23,13 +25,19 @@ class _customer_ :
        Column('Customer_Requirement', String),
     )
 
+	
+	
 @app.route('/',methods=['GET'])
 def Access_API():
 	return {'Error':404 ,'Action' : 'Accessing API','Message':'Access your API with /login'}
 
+
+
 @app.route('/login/',methods=['GET'])
 def login_function():
 	return api_connector.login_func()
+
+
 
 @app.route('/customer/',methods=['GET'])
 @app.errorhandler(502)
@@ -51,6 +59,8 @@ def customer():
     else:
         return {"Status":"Failed","Error":502,"Message":"Invalid Token, direct access to api lead to potential security breach"}
 
+
+
 @app.route('/customer/id/<string:id>/',methods=['GET'])
 def id(id):
     token=request.headers.get('token')
@@ -68,7 +78,8 @@ def id(id):
     else:
         return {"Status":"Failed","Error":502,"Message":"Invalid Token, direct access to api lead to potential security breach"}
 
-#{"cust_name":"kirog koshi","reg_date":"2020/12/16","cust_req":"koshi aPP"}
+
+
 @app.route('/customer/addcustomer/', methods=['GET', 'POST'])
 def addcustomer():
     token=request.headers.get('token')
@@ -90,7 +101,9 @@ def addcustomer():
     else:
         return {"Status":"Failed","Error":502,"Message":"Invalid Token, direct access to api lead to potential security breach"}
 
-# {"cust_id":113}
+
+
+
 @app.route('/customer/deletecustomer/', methods=['GET', 'POST'])
 def deletecustomer():
     token=request.headers.get('token')
@@ -108,7 +121,8 @@ def deletecustomer():
     else:
         return {"Status":"Failed","Error":502,"Message":"Invalid Token, direct access to api lead to potential security breach"}
 
-# {"cust_id":113,"cust_name":"David mellon Bhargav","reg_date":"2020/12/16","cust_req":"Bhargav aPP"}
+
+
 @app.route('/customer/updatecustomer/', methods=['GET', 'POST'])
 def updatecustomer():
     
@@ -131,6 +145,7 @@ def updatecustomer():
         return {"Status":"Warning","Message":"API is not Properly executed"}
     else:
         return {"Status":"Failed","Error":502,"Message":"Invalid Token, direct access to api lead to potential security breach"}
+
 
 
 if __name__ == '__main__':
