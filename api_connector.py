@@ -40,19 +40,7 @@ class _Customer_database_ :
         Column('LastName', String),
     )
 
-# @auth.verify_password
-# def verify(username,passw):
-# 	con=connection
-# 	# cursor = con.cursor()
-# 	sql_q = 'select UserID from User where Username=%(user)s and Pass=%(pass)s' 
-# 	val={'user':username,'pass':passw}
-# 	result =connection.execute(sql_q,val)
-# 	if result:
-# 		for x in result:
-# 			for i in x:
-# 				return i
-# 	else:
-# 		return False
+
 @auth.verify_password
 def verify(username,passw):
 	engine = create_engine('mysql+pymysql://{}:{}@{}/{}'.format(os.environ.get("user"),os.environ.get("password"),os.environ.get("host"),os.environ.get("database")))
@@ -61,10 +49,7 @@ def verify(username,passw):
 	value = session.query(_Customer_database_.User).filter_by(Username=username,Pass=passw).first()[0]
 	return value
 
-# @auth.login_required
-# def login_valdidate(username,pas):
-# 	con=connection
-# 	sql_q = "select UserID from User  where Username = (%(username)s) and Pass = (%(pass)s)"
+
 @auth.login_required
 def login_valdidate(username,pas):
 
@@ -72,6 +57,8 @@ def login_valdidate(username,pas):
 	DBSession = sessionmaker(bind=engine)
 	session = DBSession()
 	value = session.query(_Customer_database_.User).filter_by(Username=username,Pass=passw).first()[0]
+	
+	
 
 def verify_token(token):
 
@@ -84,16 +71,7 @@ def verify_token(token):
 	else:
 		return False
 
-# def verify_token(token):
-# 	con=connection
-# 	query='select * from UserSession1 where token=%(token)s'
-# 	val={'token':token}
-# 	result=connection.execute(query,val)
-# 	for row in result:
-# 		if(row):
-# 			return True
-# 		else:
-# 			return False
+
 
 def insert_val(UserID,token_pass,User_Agent):
 
